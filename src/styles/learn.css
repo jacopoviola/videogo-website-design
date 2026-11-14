@@ -1,0 +1,58 @@
+/* Self-learning diagram. Cards are real HTML text (readable, themeable, accessible); the connecting wires and travelling
+   dots are drawn by learn.js into an SVG sized to the diagram. Without JS, or with reduced motion, the complete diagram shows.
+   --lrn-mode tells the script which way the flow runs: "row" on wide screens, "col" (one vertical spine) on narrow ones. */
+.lrn { --lrn-mode: row; position: relative; margin-top: var(--vg-space-8); padding: 48px 40px 104px; border: 1px solid var(--vg-border-subtle); border-radius: var(--mk-radius-sheet); background: var(--vg-surface-content); overflow: hidden; }
+.lrn::before { content: ""; position: absolute; inset: 0; pointer-events: none; opacity: .5;
+  background-image: radial-gradient(circle, color-mix(in srgb, var(--vg-text-primary) 14%, transparent) 1px, transparent 1.5px); background-size: 26px 26px;
+  -webkit-mask-image: radial-gradient(ellipse 75% 80% at 50% 50%, transparent 55%, #000 100%); mask-image: radial-gradient(ellipse 75% 80% at 50% 50%, transparent 55%, #000 100%); }
+.lrn-wires { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; overflow: visible; }
+.lrn-wires path { fill: none; stroke: var(--vg-border-control); stroke-width: 1.25; stroke-linecap: round; opacity: .7; transition: stroke var(--mk-motion-hover) var(--vg-ease-in), opacity var(--mk-motion-hover) var(--vg-ease-in); }
+.lrn-wires path[data-return] { stroke-dasharray: 3 5; }
+.lrn-wires path[data-hot] { stroke: var(--vg-text-primary); opacity: 1; }
+.lrn-wires circle { fill: var(--vg-text-primary); }
+
+.lrn-flow { position: relative; display: grid; grid-template-columns: minmax(0, 1.2fr) 112px minmax(0, 1.15fr) 132px minmax(0, 1fr); gap: 56px; align-items: center; }
+.lrn-inputs { display: flex; flex-direction: column; gap: var(--vg-space-4); }
+.lrn-card { display: flex; flex-direction: column; gap: 4px; padding: var(--vg-space-3) var(--vg-space-4); border: 1px solid var(--vg-border-subtle); border-radius: var(--vg-radius-object); background: var(--vg-surface-canvas); font-size: var(--vg-compact-size); line-height: var(--vg-compact-line);
+  transition: opacity 480ms var(--vg-ease-in), transform 480ms var(--vg-ease-in), border-color var(--mk-motion-hover) var(--vg-ease-in), translate var(--mk-motion-hover) var(--vg-ease-in); }
+.lrn-card small { font-size: var(--vg-status-size); line-height: var(--vg-status-line); font-weight: 600; letter-spacing: .025em; text-transform: uppercase; color: var(--vg-text-tertiary); }
+.lrn-card b { font-weight: 600; font-size: var(--vg-body-size); line-height: var(--vg-body-line); }
+.lrn-card span { color: var(--vg-text-secondary); }
+.lrn-card--idea { border-color: var(--vg-text-primary); background: var(--vg-surface-content); box-shadow: 6px 6px 0 -1px var(--vg-surface-content), 6px 6px 0 0 var(--vg-border-subtle); }
+.lrn-card--idea[data-next] { box-shadow: 6px 6px 0 -1px var(--vg-surface-content), 6px 6px 0 0 var(--vg-border-control), 12px 12px 0 -1px var(--vg-surface-content), 12px 12px 0 0 var(--vg-border-subtle); }
+.lrn-next { align-self: flex-start; margin-top: var(--vg-space-2); padding: 2px var(--vg-space-2); border: 1px dashed var(--vg-border-control); border-radius: var(--vg-radius-status); font-size: var(--vg-status-size); line-height: var(--vg-status-line); font-weight: 600; color: var(--vg-text-secondary); transition: opacity 480ms var(--vg-ease-in); }
+
+.lrn-hub { display: grid; place-items: center; gap: var(--vg-space-2); justify-self: center; text-align: center; font-size: var(--vg-compact-size); font-weight: 600; transition: opacity 480ms var(--vg-ease-in), transform 480ms var(--vg-ease-in); }
+.lrn-hub__mark { display: grid; place-items: center; width: 88px; height: 88px; border-radius: 24px; background: var(--vg-action-primary); color: var(--vg-text-on-primary); box-shadow: 0 0 0 8px color-mix(in srgb, var(--vg-text-primary) 6%, transparent); transition: transform 320ms var(--vg-ease-in), box-shadow 320ms var(--vg-ease-in); }
+.lrn-hub__mark svg { width: 46px; height: 46px; fill: currentColor; }
+.lrn-hub[data-pulse] .lrn-hub__mark { transform: scale(1.07); box-shadow: 0 0 0 14px color-mix(in srgb, var(--vg-text-primary) 9%, transparent); }
+
+.lrn-video { display: flex; flex-direction: column; gap: var(--vg-space-2); justify-self: center; width: 100%; transition: opacity 480ms var(--vg-ease-in), transform 480ms var(--vg-ease-in); }
+.lrn-video small { font-size: var(--vg-status-size); line-height: var(--vg-status-line); font-weight: 600; letter-spacing: .025em; text-transform: uppercase; color: var(--vg-text-tertiary); }
+.lrn-video__frame { aspect-ratio: 9 / 16; display: grid; grid-template-rows: auto 1fr auto; gap: 6px; padding: 10px 8px; border: 1px solid var(--vg-border-subtle); border-radius: var(--vg-radius-object); background: #1D1D1F; color: #F5F5F7; font-size: 10px; line-height: 13px; font-weight: 600; }
+.lrn-video__split { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; }
+.lrn-video__split i { display: grid; place-items: end center; padding: 5px 2px; border-radius: 7px; background: rgba(255,255,255,.12); font-style: normal; font-size: 9px; line-height: 11px; text-align: center; }
+.lrn-video__split i:last-child { background: rgba(255,255,255,.22); }
+.lrn-video__bar { height: 3px; border-radius: 3px; background: rgba(255,255,255,.25); }
+.lrn-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px; }
+.lrn-tags li { padding: 2px var(--vg-space-2); border: 1px solid var(--vg-border-subtle); border-radius: var(--vg-radius-status); background: var(--vg-surface-content); font-size: var(--vg-status-size); line-height: var(--vg-status-line); font-weight: 500; color: var(--vg-text-secondary); }
+.lrn-return { position: absolute; left: 0; right: 0; top: var(--lrn-return-top, auto); bottom: auto; margin: 0 auto; width: max-content; max-width: 80%; padding: 2px var(--vg-space-3); border-radius: var(--vg-radius-status); background: var(--vg-surface-content); font-size: var(--vg-meta-size); line-height: var(--vg-meta-line); font-weight: 500; color: var(--vg-text-secondary); text-align: center; transition: opacity 480ms var(--vg-ease-in); }
+
+/* Entrance choreography: only while the script is running it (data-anim). Each node appears when it gets [data-on]. */
+.js .lrn[data-anim] [data-node]:not([data-on]) { opacity: 0; transform: translateY(12px) scale(.98); }
+.js .lrn[data-anim] .lrn-next:not([data-on]), .js .lrn[data-anim] .lrn-return:not([data-on]) { opacity: 0; transform: none; }
+@media (hover: hover) and (prefers-reduced-motion: no-preference) { .lrn-card:hover { translate: 0 -2px; border-color: var(--vg-border-control); } .lrn-card--idea:hover { border-color: var(--vg-text-primary); } }
+
+/* Narrow: one readable vertical flow. Wires become a spine on the left; the return path runs up the right edge. */
+@media (max-width: 68em) {
+  .lrn { --lrn-mode: col; padding: 28px 44px 28px 44px; }
+  .lrn-flow { grid-template-columns: minmax(0, 1fr); gap: 28px; max-width: 460px; margin-inline: auto; }
+  .lrn-hub { grid-auto-flow: column; justify-self: start; }
+  .lrn-hub__mark { width: 56px; height: 56px; border-radius: 16px; }
+  .lrn-hub__mark svg { width: 30px; height: 30px; }
+  .lrn-video { flex-direction: row; align-items: center; gap: var(--vg-space-4); padding: var(--vg-space-3) var(--vg-space-4); border: 1px solid var(--vg-border-subtle); border-radius: var(--vg-radius-object); background: var(--vg-surface-canvas); }
+  .lrn-video__frame { width: 84px; flex: none; }
+  .lrn-return { position: static; top: auto; width: auto; max-width: none; margin: 20px auto 0; background: transparent; }
+}
+@media (max-width: 30em) { .lrn { padding-inline: 30px 34px; } }
+@media (prefers-reduced-motion: reduce) { .lrn-card, .lrn-hub, .lrn-video, .lrn-next, .lrn-return, .lrn-hub__mark { transition: none; } }

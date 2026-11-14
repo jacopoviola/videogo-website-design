@@ -1,0 +1,36 @@
+/* LOCAL dark theme for the landing page only. Design System v12 is light-only ("a dark theme is TBD"); these values are
+   a marketing-page extension and do not change tokens.css. Applied through data-theme, set before first paint by js-flag.js. The product preview stays light — there is no dark product UI. */
+:root { color-scheme: light; --mk-invert: 0;
+  --mk-contrast-surface: #1D1D1F; --mk-contrast-text: #F5F5F7; --mk-contrast-muted: #B9B9C0; --mk-contrast-line: rgba(255,255,255,.16); --mk-contrast-chip: rgba(255,255,255,.24);
+  --mk-particle: 29,29,31; --mk-particle-edge: 255,255,255; }
+
+:root[data-theme="dark"] { color-scheme: dark; --mk-invert: 1;
+  --vg-surface-canvas: #0E0E10; --vg-surface-content: #17171A; --vg-surface-subtle: #1F1F23; --vg-surface-selected: #2B2B31;
+  --vg-text-primary: #F5F5F7; --vg-text-secondary: #B6B6BE; --vg-text-tertiary: #9C9CA6; --vg-text-on-primary: #111113;
+  --vg-border-subtle: #2F2F36; --vg-border-control: #7C7C87;
+  --vg-action-primary: #F5F5F7; --vg-action-primary-hover: #E1E1E6; --vg-action-primary-pressed: #FFFFFF;
+  --vg-authorization: #7DB0FF; --vg-authorization-hover: #98C0FF; --vg-authorization-pressed: #B3D1FF; --vg-authorization-surface: #14233D;
+  --vg-need: #FF8F85; --vg-need-surface: #3A1715; --vg-focus: #7DB0FF;
+  --mk-contrast-surface: #F5F5F7; --mk-contrast-text: #1D1D1F; --mk-contrast-muted: #5C5C63; --mk-contrast-line: rgba(0,0,0,.14); --mk-contrast-chip: rgba(0,0,0,.3);
+  --mk-particle: 245,245,247; --mk-particle-edge: 0,0,0; --mk-elevation-floating: 0 8px 32px rgba(0,0,0,.5), 0 1px 3px rgba(0,0,0,.4); }
+/* No prefers-color-scheme block on purpose: the default follows the visitor's local time (js-flag.js), never the OS. Without JS the page is light. */
+
+/* Single-ink artwork (lockup, partner logos) flips with the theme. Photographs and videos are never inverted. */
+.mk-header__logo img, .mk-footer__brand img, .mk-backed img, .mk-marquee img, .lg-header img { filter: invert(var(--mk-invert)); }
+
+/* The product preview keeps the approved light UI in every theme. */
+.mk-window { color-scheme: light; color: #1D1D1F;
+  --vg-surface-canvas: #F5F5F7; --vg-surface-content: #FFFFFF; --vg-surface-subtle: #EFEFF1; --vg-surface-selected: #E3E3E8;
+  --vg-text-primary: #1D1D1F; --vg-text-secondary: #5C5C63; --vg-text-tertiary: #68686E; --vg-text-on-primary: #FFFFFF;
+  --vg-border-subtle: #D8D8DD; --vg-border-control: #85858B; --vg-authorization: #0057D9; --vg-authorization-surface: #EDF3FF; --vg-focus: #0057D9; }
+
+/* ---- Shared "Request a demo" CTA: muted warm gold → white on hover, near-black text in both themes ---- */
+:root { --mk-cta-bg: #D2B15F; --mk-cta-bg-pressed: #BD9C4E; --mk-cta-text: #1D1D1F; --mk-cta-border: rgba(29,29,31,.22); --mk-cta-hover-bg: #FFFFFF; --mk-cta-disabled-bg: #E6E6EA; --mk-cta-disabled-text: #7A7A84; }
+:root[data-theme="dark"] { --mk-cta-border: rgba(255,255,255,.28); --mk-cta-disabled-bg: #2B2B31; --mk-cta-disabled-text: #8C8C96; }
+
+/* ============ Fifth colour: the brand red, used sparingly ============
+   Palette order: black, white, grey, gold, red. The red is reserved for the dotted backgrounds on the dark theme
+   (the hero dot field and the dotted band behind the closing form); on the light theme those dots are gold. */
+:root { --mk-red: #FF0048; --mk-dot-ink: var(--mk-cta-bg); --mk-dot-alpha: 70%; }
+:root[data-theme="dark"] { --mk-dot-ink: var(--mk-red); --mk-dot-alpha: 75%; }
+.mk-dots { background-image: radial-gradient(circle, color-mix(in srgb, var(--mk-dot-ink) var(--mk-dot-alpha), transparent) 1.5px, transparent 2.2px); }

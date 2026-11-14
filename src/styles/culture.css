@@ -1,0 +1,24 @@
+/* Culture page: nine principles as a calm, readable grid. Layout only — every colour, space and radius
+   comes from the design system tokens, and the cards reuse the site's card surface and hover behaviour. */
+.cu-intro .mk-section__head { margin-bottom: 0; }
+.cu-intro .mk-h2 { font-size: var(--mk-display-sm-size); line-height: var(--mk-display-sm-line); letter-spacing: -0.02em; }
+.cu-head { margin-bottom: var(--vg-space-8); }
+
+.cu-list { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--vg-space-5); max-width: 1120px; margin-inline: auto; }
+@media (min-width: 48em) { .cu-list { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--vg-space-6); } }
+@media (min-width: 72em) { .cu-list { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+
+.cu-card { display: flex; flex-direction: column; gap: var(--vg-space-2); padding: var(--vg-space-6); border: 1px solid var(--vg-border-subtle); border-radius: var(--vg-radius-object);
+  background: var(--vg-surface-content); transition: translate var(--mk-motion-hover) var(--vg-ease-in), border-color var(--mk-motion-hover) var(--vg-ease-in), box-shadow var(--mk-motion-hover) var(--vg-ease-in); }
+.cu-card__n { font-size: var(--vg-status-size); line-height: var(--vg-status-line); font-weight: 600; letter-spacing: .08em; font-variant-numeric: tabular-nums; color: var(--mk-label-gold); }
+.cu-card { --mk-label-gold: #8A6A1F; }                                  /* AA on the light card surface */
+:root[data-theme="dark"] .cu-card { --mk-label-gold: var(--mk-cta-bg); } /* AA on the dark card surface */
+.cu-card__title { font-size: var(--vg-section-size); line-height: var(--vg-section-line); letter-spacing: -0.01em; text-wrap: balance; }
+.cu-card__body { color: var(--vg-text-secondary); }
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .cu-card:hover { translate: 0 -2px; border-color: var(--vg-border-control); box-shadow: var(--mk-elevation-floating); }
+}
+@media (max-width: 30em) { .cu-card { padding: var(--vg-space-5); } }
+
+.cu-close .pr-cta { gap: var(--vg-space-4); }
+.cu-close .pr-cta .mk-sub { margin-top: calc(-1 * var(--vg-space-2)); }
